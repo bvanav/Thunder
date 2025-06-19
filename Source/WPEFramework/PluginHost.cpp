@@ -650,7 +650,7 @@ POP_WARNING()
             // We need at least the loopback interface before we continue...
             StartLoopbackInterface();
 #endif
-
+            fprintf(stderr, "bvanav-dbg: Initiating PluginHost Server...");
             // Startup/load/initialize what we found in the configuration.
             _dispatcher = new PluginHost::Server(*_config, _background);
 
