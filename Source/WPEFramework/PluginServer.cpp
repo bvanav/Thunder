@@ -342,7 +342,7 @@ namespace PluginHost
 
             const string callSign(PluginHost::Service::Configuration().Callsign.Value());
             const string className(PluginHost::Service::Configuration().ClassName.Value());
-            fprint(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate Enter callsign: %s\n", callSign.c_str());
+            fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate Enter callsign: %s\n", callSign.c_str());
             if (_handler == nullptr) {
                 SYSLOG(Logging::Startup, (_T("Loading of plugin [%s]:[%s], failed. Error [%s]"), className.c_str(), callSign.c_str(), ErrorMessage().c_str()));
                 result = Core::ERROR_UNAVAILABLE;
@@ -389,14 +389,14 @@ namespace PluginHost
                 }
 
                 TRACE(Activity, (_T("Activation plugin [%s]:[%s]"), className.c_str(), callSign.c_str()));
-                fprint(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate before invoke _administrator.Initialize(%s)\n", callSign.c_str());
+                fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate before invoke _administrator.Initialize(%s)\n", callSign.c_str());
                 _administrator.Initialize(callSign, this);
-                fprint(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate after invoke _administrator.Initialize(%s)\n", callSign.c_str());
+                fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate after invoke _administrator.Initialize(%s)\n", callSign.c_str());
                 
                 State(ACTIVATION);
 
                 Unlock();
-                fprint(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate before invoke _handler->Initialize(%s)\n", callSign.c_str());
+                fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate before invoke _handler->Initialize(%s)\n", callSign.c_str());
                 REPORT_DURATION_WARNING( { ErrorMessage(_handler->Initialize(this)); }, WarningReporting::TooLongPluginState, WarningReporting::TooLongPluginState::StateChange::ACTIVATION, callSign.c_str());
 
                 if (HasError() == true) {
@@ -436,9 +436,9 @@ namespace PluginHost
                     SYSLOG(Logging::Startup, (_T("Activated plugin [%s]:[%s]"), className.c_str(), callSign.c_str()));
                     Lock();
                     State(ACTIVATED);
-                    fprint(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate before invoke_administrator.Activated(%s)\n", callSign.c_str());
+                    fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate before invoke_administrator.Activated(%s)\n", callSign.c_str());
                     _administrator.Activated(callSign, this);
-                    fprint(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate after invoke_administrator.Activated(%s)\n", callSign.c_str());
+                    fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate after invoke_administrator.Activated(%s)\n", callSign.c_str());
 #if THUNDER_RESTFULL_API
                     _administrator.Notification(_T("{\"callsign\":\"") + callSign + _T("\",\"state\":\"deactivated\",\"reason\":\"") + textReason.Data() + _T("\"}"));
 #endif
@@ -458,7 +458,7 @@ namespace PluginHost
         } else {
             Unlock();
         }
-        fprint(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate Return callsign: %s\n", callsign.c_str());
+        fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate Return callsign: %s\n", callSign.c_str());
         return (result);
     }
 
@@ -515,7 +515,7 @@ namespace PluginHost
 
             const string className(PluginHost::Service::Configuration().ClassName.Value());
             const string callSign(PluginHost::Service::Configuration().Callsign.Value());
-            fprint(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Deactivate Enter callsign: %s\n", callsign.c_str());
+            fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Deactivate Enter callsign: %s\n", callSign.c_str());
             _reason = why;
 
             if(currentState == IShell::state::HIBERNATED)
@@ -539,9 +539,9 @@ namespace PluginHost
 
                 if (currentState == IShell::ACTIVATED) {
                     TRACE(Activity, (_T("Deactivating plugin [%s]:[%s]"), className.c_str(), callSign.c_str()));
-                    fprint(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Deactivate before invoke _administrator.Deactivated(%s)\n", callsign.c_str());
+                    fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Deactivate before invoke _administrator.Deactivated(%s)\n", callSign.c_str());
                     _administrator.Deactivated(callSign, this);
-                    fprint(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Deactivate after invoke _administrator.Deactivated(%s)\n", callsign.c_str());
+                    fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Deactivate after invoke _administrator.Deactivated(%s)\n", callSign.c_str());
                 }
 
                 // We might require PostMortem analyses if the reason is not really clear. Call the PostMortum installed so it can generate
@@ -579,16 +579,16 @@ namespace PluginHost
             }
 
             State(why == CONDITIONS ? PRECONDITION : DEACTIVATED);
-            fprint(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Deactivate before invoke _administrator.Deinitialized(%s)\n", callsign.c_str());
+            fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Deactivate before invoke _administrator.Deinitialized(%s)\n", callSign.c_str());
             _administrator.Deinitialized(callSign, this);
-            fprint(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Deactivate after invoke _administrator.Deinitialized(%s)\n", callsign.c_str());
+            fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Deactivate after invoke _administrator.Deinitialized(%s)\n", callSign.c_str());
             // We have no need for his module anymore..
             ReleaseInterfaces();
         }
 
 
         Unlock();
-        fprint(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Deactivate Return callsign: %s\n", callsign.c_str());
+        fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Deactivate Return callsign: %s\n", callSign.c_str());
         return (result);
     }
 
