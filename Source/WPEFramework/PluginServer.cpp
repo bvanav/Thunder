@@ -322,7 +322,7 @@ namespace PluginHost
 
         Lock();
         IShell::state currentState(State());
-
+        const string callSign(PluginHost::Service::Configuration().Callsign.Value());
         if (currentState == IShell::state::ACTIVATION) {
             Unlock();
             result = Core::ERROR_INPROGRESS;
@@ -340,7 +340,7 @@ namespace PluginHost
                 AcquireInterfaces();
             }
 
-            const string callSign(PluginHost::Service::Configuration().Callsign.Value());
+            // const string callSign(PluginHost::Service::Configuration().Callsign.Value());
             const string className(PluginHost::Service::Configuration().ClassName.Value());
             fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Activate Enter callsign: %s\n", callSign.c_str());
             if (_handler == nullptr) {
@@ -505,7 +505,7 @@ namespace PluginHost
         Lock();
         
         IShell::state currentState(State());
-
+        const string callSign(PluginHost::Service::Configuration().Callsign.Value());
         if (currentState == IShell::state::DEACTIVATION) {
             result = Core::ERROR_INPROGRESS;
         } else if ( ((currentState == IShell::state::ACTIVATION) && (why != IShell::reason::INITIALIZATION_FAILED)) || (currentState == IShell::state::DESTROYED)) {
@@ -514,7 +514,7 @@ namespace PluginHost
             const Core::EnumerateType<PluginHost::IShell::reason> textReason(why);
 
             const string className(PluginHost::Service::Configuration().ClassName.Value());
-            const string callSign(PluginHost::Service::Configuration().Callsign.Value());
+            // const string callSign(PluginHost::Service::Configuration().Callsign.Value());
             fprintf(stderr, "bvanav-dbg: PluginServer.cpp Server::Service::Deactivate Enter callsign: %s\n", callSign.c_str());
             _reason = why;
 
