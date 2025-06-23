@@ -26,6 +26,7 @@
 #include "IRemoteInstantiation.h"
 #include "WarningReportingCategories.h"
 #include "PostMortem.h"
+#include <typeinfo>
 
 #ifdef PROCESSCONTAINERS_ENABLED
 #include "../processcontainers/ProcessContainer.h"
@@ -2916,31 +2917,36 @@ POP_WARNING()
             void Initialize(const string& callsign, PluginHost::IShell* entry)
             {
                 _notificationLock.Lock();
-
+                fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Initialize Enter callsign: %s\n", callsign.c_str());
                 Notifiers::iterator index(_notifiers.begin());
-
+                int count = 1;
                 while (index != _notifiers.end()) {
                     PluginHost::IPlugin::ILifeTime* lifetime = (*index)->QueryInterface<PluginHost::IPlugin::ILifeTime>();
                     if (lifetime != nullptr) {
+                        fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Initialize count: %d callsign: %s typeid(*(*index)): %s calling Initialize()\n", count, callsign.c_str(), typeid(*(*index)).name());
                         lifetime->Initialize(callsign, entry);
+                        fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Initialize count: %d callsign: %s typeid(*(*index)): %s calling Release()\n", count, callsign.c_str(), typeid(*(*index)).name());
                         lifetime->Release();
                     }
                     index++;
+                    count++;
                 }
-
+                fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Initialize Return callsign: %s\n", callsign.c_str());
                 _notificationLock.Unlock();
             }
             void Activated(const string& callsign, PluginHost::IShell* entry)
             {
                 _notificationLock.Lock();
-
+                fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Activated Enter callsign: %s\n", callsign.c_str());
                 Notifiers::iterator index(_notifiers.begin());
-
+                int count = 1;
                 while (index != _notifiers.end()) {
+                    fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Activated count: %d callsign: %s typeid(*(*index)): %s->Activated()\n", count, callsign.c_str(), typeid(*(*index)).name());
                     (*index)->Activated(callsign, entry);
                     index++;
+                    count++;
                 }
-
+                fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Activated Enter callsign: %s\n", callsign.c_str());
                 _notificationLock.Unlock();
             }
             void Deactivated(const string& callsign, PluginHost::IShell* entry)
