@@ -27,6 +27,7 @@
 #include "WarningReportingCategories.h"
 #include "PostMortem.h"
 #include <typeinfo>
+#include <unistd.h>
 
 #ifdef PROCESSCONTAINERS_ENABLED
 #include "../processcontainers/ProcessContainer.h"
@@ -2921,6 +2922,7 @@ POP_WARNING()
                 Notifiers::iterator index(_notifiers.begin());
                 int count = 1;
                 while (index != _notifiers.end()) {
+                    fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Initialize count: %d typeid(*(*index)): %s callsign: %s calling index->QueryInterfacecallsign\n", count, typeid(*(*index)).name(), callsign.c_str());
                     PluginHost::IPlugin::ILifeTime* lifetime = (*index)->QueryInterface<PluginHost::IPlugin::ILifeTime>();
                     if (lifetime != nullptr) {
                         fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Initialize count: %d callsign: %s typeid(*(*index)): %s calling Initialize()\n", count, callsign.c_str(), typeid(*(*index)).name());
@@ -2999,6 +3001,7 @@ POP_WARNING()
                 ASSERT(std::find(_notifiers.begin(), _notifiers.end(), sink) == _notifiers.end());
 
                 sink->AddRef();
+                fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Register calling _notifiers.push_back typeid(*this): %s typeid(*sink): %s pid: %d\n", typeid(*this).name(), typeid(*sink).name(), getpid());
                 _notifiers.push_back(sink);
 
                 // Tell this "new" sink all our actived plugins..

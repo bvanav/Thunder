@@ -22,6 +22,8 @@
 
 #include "IPlugin.h"
 #include "IShell.h"
+#include <pthread.h>
+#include <unistd.h>
 
 namespace WPEFramework {
 namespace PluginHost {
@@ -251,6 +253,7 @@ PUSH_WARNING(DISABLE_WARNING_THIS_IN_MEMBER_INITIALIZER_LIST)
             , _monitor(*this)
             , _connectionId(~0)
         {
+            fprintf(stderr, "bvanav-dbg: Types.h RPC::SmartInterfaceType ctor pid: %d tid: %lu\n", getpid(), pthread_self());
         }
 POP_WARNING()
         virtual ~SmartInterfaceType()
