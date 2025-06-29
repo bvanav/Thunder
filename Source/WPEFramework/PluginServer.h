@@ -2922,7 +2922,7 @@ POP_WARNING()
                 Notifiers::iterator index(_notifiers.begin());
                 int count = 1;
                 while (index != _notifiers.end()) {
-                    fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Initialize count: %d typeid(*(*index)): %s callsign: %s calling index->QueryInterfacecallsign\n", count, typeid(*(*index)).name(), callsign.c_str());
+                    fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Initialize count: %d typeid(*(*index)): <addr: %p> %s callsign: %s calling index->QueryInterfacecallsign\n", count, *index, typeid(*(*index)).name(), callsign.c_str());
                     PluginHost::IPlugin::ILifeTime* lifetime = (*index)->QueryInterface<PluginHost::IPlugin::ILifeTime>();
                     if (lifetime != nullptr) {
                         fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Initialize count: %d callsign: %s typeid(*(*index)): %s calling Initialize()\n", count, callsign.c_str(), typeid(*(*index)).name());
@@ -2943,7 +2943,7 @@ POP_WARNING()
                 Notifiers::iterator index(_notifiers.begin());
                 int count = 1;
                 while (index != _notifiers.end()) {
-                    fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Activated count: %d callsign: %s typeid(*(*index)): %s->Activated()\n", count, callsign.c_str(), typeid(*(*index)).name());
+                    fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Activated count: %d callsign: %s typeid(*(*index)): <addr: %p> %s->Activated()\n", count, callsign.c_str(), *index, typeid(*(*index)).name());
                     (*index)->Activated(callsign, entry);
                     index++;
                     count++;
@@ -3001,7 +3001,7 @@ POP_WARNING()
                 ASSERT(std::find(_notifiers.begin(), _notifiers.end(), sink) == _notifiers.end());
 
                 sink->AddRef();
-                fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Register calling _notifiers.push_back typeid(*this): %s typeid(*sink): %s pid: %d\n", typeid(*this).name(), typeid(*sink).name(), getpid());
+                fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Register calling _notifiers.push_back typeid(*this): %s typeid(*sink): <addr: %p> %s pid: %d\n", typeid(*this).name(), sink, typeid(*sink).name(), getpid());
                 _notifiers.push_back(sink);
 
                 // Tell this "new" sink all our actived plugins..
