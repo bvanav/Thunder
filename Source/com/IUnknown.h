@@ -292,7 +292,7 @@ namespace ProxyStub {
         inline uint32_t Invoke(Core::ProxyType<RPC::InvokeMessage>& message, const uint32_t waitTime = RPC::CommunicationTimeOut) const
         {
             ASSERT(_channel.IsValid() == true);
-
+	    fprintf(stderr, "bvanav-dbg: IUnkown.h Invoke waitTime is %d\n", waitTime);
             uint32_t result = _channel->Invoke(message, waitTime);
 
             if (result != Core::ERROR_NONE) {
