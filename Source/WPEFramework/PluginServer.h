@@ -3004,10 +3004,10 @@ POP_WARNING()
                 fprintf(stderr, "bvanav-dbg: PluginServer.h PluginHost::Server::ServiceMap::Register calling _notifiers.push_back typeid(*this): %s typeid(*sink): <addr: %p> %s pid: %d\n", typeid(*this).name(), sink, typeid(*sink).name(), getpid());
                 _notifiers.push_back(sink);
 		
-		if(_notifiers.size() == 11){
-			fprintf(stderr, "bvanav-dbg: notifier list reached count of 11 aborting...\n");
-			abort();
-		}
+		        if(_notifiers.size() == 11){
+			        fprintf(stderr, "bvanav-dbg: notifier list reached count of 11 delaying for 50s...\n");
+			        sleep(50);
+		        }
 
                 // Tell this "new" sink all our actived plugins..
                 ServiceContainer::iterator index(_services.begin());

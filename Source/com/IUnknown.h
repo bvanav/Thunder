@@ -24,6 +24,7 @@
 #include "Ids.h"
 #include "Administrator.h"
 #include "Messages.h"
+#include <unistd.h>
 
 namespace WPEFramework {
 
@@ -298,7 +299,8 @@ namespace ProxyStub {
                 result |= COM_ERROR;
 
                 // Oops something failed on the communication. Report it.
-                TRACE_L1("IPC method invocation failed for 0x%X, error: %d", message->Parameters().InterfaceId(), result);
+                //TRACE_L1("IPC method invocation failed for 0x%X, error: %d", message->Parameters().InterfaceId(), result);
+                fprintf(stderr, "bvanav-dbg: IUnkown.h Invoke IPC method invocation failed for 0x%X, error: %d pid: %d\n", message->Parameters().InterfaceId(), result, getpid());
             }
 
             return (result);
