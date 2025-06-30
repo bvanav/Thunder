@@ -34,7 +34,8 @@ namespace ProxyStub {
 namespace RPC {
 
 #ifdef __DEBUG__
-    enum { CommunicationTimeOut = Core::infinite }; // Time in ms. Forever
+    fprintf(stderr, "bvanav-dbg: Administrator.h changing RPC::CommunicationTimeOut from infinite timeout to 20s\n");
+    enum { CommunicationTimeOut = 20000 }; // Time in ms. Forever
 #else
     enum { CommunicationTimeOut = 3000 }; // Time in ms. 3 Seconds
 #endif
