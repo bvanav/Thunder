@@ -292,7 +292,7 @@ namespace ProxyStub {
         inline uint32_t Invoke(Core::ProxyType<RPC::InvokeMessage>& message, const uint32_t waitTime = RPC::CommunicationTimeOut) const
         {
             ASSERT(_channel.IsValid() == true);
-	    fprintf(stderr, "bvanav-dbg: IUnkown.h Invoke waitTime is %d\n", waitTime);
+	        fprintf(stderr, "bvanav-dbg: IUnkown.h Invoke calling _channel->Invoke waitTime is %d interfaceid: 0x%X pid: %d\n", waitTime, message->Parameters().InterfaceId(), getpid());
             uint32_t result = _channel->Invoke(message, waitTime);
 
             if (result != Core::ERROR_NONE) {
@@ -302,7 +302,7 @@ namespace ProxyStub {
                 //TRACE_L1("IPC method invocation failed for 0x%X, error: %d", message->Parameters().InterfaceId(), result);
                 fprintf(stderr, "bvanav-dbg: IUnkown.h Invoke IPC method invocation failed for 0x%X, error: %d pid: %d\n", message->Parameters().InterfaceId(), result, getpid());
             }
-
+            fprintf(stderr, "bvanav-dbg: IUnkown.h Invoke after _channel->Invoke waitTime is %d pid: %d interfaceid: 0x%X result: %d\n", waitTime, getpid(), message->Parameters().InterfaceId(), result);
             return (result);
         }
         inline uint32_t Complete(const Core::instance_id& impl, const uint32_t id, const RPC::Data::Output::mode how)

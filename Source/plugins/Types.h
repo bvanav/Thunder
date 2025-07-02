@@ -65,9 +65,9 @@ namespace PluginHost {
                 _callsign = callsign;
                 _state = state::REGISTRING;
                 _adminLock.Unlock();
-
+                fprintf(stderr, "bvanav-dbg: Types.h Sink from SmartInterfaceType PluginMonitorType before controller->Register pid: %d\n", getpid());
                 controller->Register(this);
-
+                fprintf(stderr, "bvanav-dbg: Types.h Sink from SmartInterfaceType PluginMonitorType after controller->Register pid: %d\n", getpid());
                 _adminLock.Lock();
                 if (_state == state::LOADED) {
 
